@@ -3,6 +3,12 @@ data "aws_iam_policy_document" "lambda" {
     effect  = "Allow"
     actions = ["sts:AssumeRole"]
 
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceAccount"
+      values   = [var.account_id]
+    }
+
     principals {
       type        = "Service"
       identifiers = ["lambda.amazonaws.com"]
